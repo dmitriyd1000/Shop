@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <style>
+        .block0 {
+            margin-right: 70px;
+        }
+        .block1 {
+            position: relative;
+        }
+
+        .block2 {
+            position: absolute;
+            top: 50%;
+            right: 0%;
+            transform: translate(0, -50%)
+        }
+    </style>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContentAccessor
+                @{
+                    byte[] a;
+                    HttpContentAccessor.HttpContext.Session.TryGetValue("CartId", out a);
+                    string str = "";
+                    string hid = "hidden = \"\"";
+                    string marg_class = "";
+                    if (a != null)
+                    {
+                        @inject Shop.Data.Models.ShopCart shopCart
+                        shopCart.listShopItems = shopCart.GetShopItems();
+                        str = System.Text.Encoding.Default.GetString(a);
+                        int? icount = shopCart?.listShopItems?.Count();
+                        if (str != "" && icount>0) { hid = ""; marg_class = "class=block0"; }
+                    }
+                }
+                <a class="navbar-brand" href="#">My store</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Cars/List">Cars</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Cars/List/electro">Electric Cars</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Cars/List/fuel">Classic Cars</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled">Disabled</a>
+                        </li>
+                    </ul>
+                    <div @marg_class>
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                    <div class="block1">
+                        <div class="block2">
+                            <a href="/ShopCart" @hid> <img height="45px" src="~/img/basket_icon.png" /> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container mt-5">
+        @RenderSection("Body")
+    </div>
+    <script scr="~/js/bootstrap.min.js"></script>
+    <footer class="container">
+        <p class="float-end"><a href="#">Back to top</a></p>
+        <p>© 2021 DD · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+    </footer>
+</body>
+</html>

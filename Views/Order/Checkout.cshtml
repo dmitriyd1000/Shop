@@ -1,0 +1,39 @@
+﻿@model Order
+@section Body
+{
+    <div class=" row">
+        <form asp-action="Checkout" method="post">
+            <fieldset>
+                <legend> Registration form </legend>
+                <div class="form-group">
+                    <label asp-for="name"></label>
+                    <div class="col-md-5">
+                        <input asp-for="name" class="form_control" />
+                        <span asp-validator-for="name" class="text-danger"></span>
+                    </div>
+                    <label asp-for="surname"></label>
+                    <div class="col-md-5">
+                        <input asp-for="surname" class="form_control" />
+                        <span asp-validator-for="surname" class="text-danger"></span>
+                    </div>
+                    <label asp-for="address">address</label>
+                    <div class="col-md-5">
+                        <input asp-for="address" class="form_control" />
+                        <span asp-validator-for="adress" class="text-danger"></span>
+                    </div>
+                    <label asp-for="email"></label>
+                    <div class="col-md-5">
+                        <input asp-for="email" class="form_control" />
+                        <span asp-validator-for="email" class="text-danger"></span>
+                    </div>
+                    <label asp-for="phone"></label>
+                    <div class="col-md-5">
+                        <input asp-for="phone" class="form_control" />
+                        <span asp-validator-for="phone" class="text-danger"></span>
+                    </div>
+                </div>
+                <input class="btn btn-success" type="submit" value="Complete order" />
+            </fieldset>
+        </form>
+    </div>
+}

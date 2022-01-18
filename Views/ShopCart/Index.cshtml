@@ -1,0 +1,35 @@
+﻿@model ShopCartViewModel
+@section Body
+{
+<style>
+    .block1 {
+        position: relative;
+    }
+
+    .block2 {
+        position: absolute;
+        top: 50%;
+        right: 0%;
+        transform: translate(0, -50%)
+    }
+</style>
+<div class="container">
+    @foreach (var el in Model.shopCart.listShopItems)
+    {
+        <div class="alert alert-warning mt-3">
+            <div class="block1">
+                <b> Car: </b> @el.car.name <br />
+                <b> Price: </b> @el.car.price.ToString("c")
+                <div class="block2">
+                    <form asp-action="DropItem" method="post">
+                        <input type="hidden" id="@el.car.id" name="id" value="@el.car.id" />
+                        <input class="btn btn-danger" style="font-family:Webdings" type="submit" value="r" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+    <a class="btn btn-warning" asp-controller="Order" asp-action="Checkout"> To Pay</a>
+</div>
+}
